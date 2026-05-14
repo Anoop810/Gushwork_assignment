@@ -142,7 +142,7 @@
   const catalogueForm = document.getElementById("catalogue-form");
   if (catalogueForm) {
     catalogueForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+      e.preventDefault(); // static demo — no POST
       if (!catalogueForm.reportValidity()) return;
       catalogueForm.reset();
     });

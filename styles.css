@@ -1,6 +1,4 @@
-/* --------------------------------------------------------------------------
-   Responsive page padding + max content width (Figma handoff)
-   -------------------------------------------------------------------------- */
+/* Max-width shell + fold padding; --nav-offset keeps sticky nav clear if needed */
 :root {
   --container-max: 1240px;
   --fold-pad-y: 48px;
@@ -461,6 +459,7 @@ a.btn {
 }
 
 .hero__zoom {
+  /* hover loupe: bg image + position, not a second img */
   position: absolute;
   right: clamp(10px, 2vw, 20px);
   top: 50%;
@@ -1153,6 +1152,7 @@ a.btn {
 }
 
 .faq-item__chev-img {
+  /* two imgs stacked; which one shows is CSS-only */
   position: absolute;
   left: 50%;
   top: 50%;
