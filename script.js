@@ -1,12 +1,8 @@
-/**
- * Mangalam HDPE product page — hero carousel, FAQ, post-Figma sections, modals,
- * industries scroll, process tabs.
- */
+// Small page scripts: carousel, FAQ, modals, industries strip, HDPE process tabs.
 
 (function () {
   "use strict";
 
-  /* ----------------------- Hero carousel + hover zoom -------------------- */
   const carouselRoot = document.querySelector("[data-carousel]");
   if (carouselRoot) {
     const slides = Array.from(
@@ -22,7 +18,7 @@
 
     function buildThumbs() {
       if (!thumbsHost) return;
-      thumbsHost.innerHTML = "";
+      thumbsHost.innerHTML = ""; // thumbs mirror slide images (src only)
       slides.forEach((slide, idx) => {
         const srcImg = slide.querySelector("img");
         if (!srcImg) return;
@@ -73,7 +69,7 @@
       if (!img) return;
       const hiRes =
         img.getAttribute("data-carousel-src") || img.currentSrc || img.src;
-      zoomPanel.style.backgroundImage = `url("${hiRes}")`;
+      zoomPanel.style.backgroundImage = `url("${hiRes}")`; // div acts as zoomed crop
       const rect = slideButton.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width;
       const y = (event.clientY - rect.top) / rect.height;
@@ -100,7 +96,7 @@
     if (nextBtn) nextBtn.addEventListener("click", () => setActive(index + 1));
 
     document.addEventListener("keydown", (e) => {
-      if (!carouselRoot.contains(document.activeElement)) return;
+      if (!carouselRoot.contains(document.activeElement)) return; // focus inside gallery only
       if (e.key === "ArrowLeft") {
         e.preventDefault();
         setActive(index - 1);
@@ -113,7 +109,6 @@
     buildThumbs();
   }
 
-  /* --------------------------- FAQ accordion ----------------------------- */
   const faqRoot = document.querySelector("[data-faq-accordion]");
   if (faqRoot) {
     function setFaqItemState(item, open) {
@@ -136,7 +131,7 @@
       if (!item) return;
       const wasOpen = item.classList.contains("is-open");
       faqRoot.querySelectorAll("[data-faq-item]").forEach((i) => {
-        setFaqItemState(i, false);
+        setFaqItemState(i, false); // close siblings
       });
       if (!wasOpen) {
         setFaqItemState(item, true);
@@ -153,12 +148,11 @@
     });
   }
 
-  /* ------------------------------- Modals ------------------------------- */
   const modalDatasheet = document.getElementById("modal-datasheet");
   const modalQuote = document.getElementById("modal-quote");
   const quoteForm = document.getElementById("quote-form");
 
-  let lastFocus = null;
+  let lastFocus = null; // return focus here after close
 
   function openModal(id) {
     const el =
@@ -215,11 +209,10 @@
       e.preventDefault();
       if (!ctaInlineForm.reportValidity()) return;
       ctaInlineForm.reset();
-      openModal("quote");
+      openModal("quote"); // hand off to main quote modal
     });
   }
 
-  /* ------------------------ Industries row scroll ---------------------- */
   const industriesViewport = document.querySelector("[data-industries-viewport]");
   const industriesPrev = document.querySelector("[data-industries-prev]");
   const industriesNext = document.querySelector("[data-industries-next]");
@@ -228,7 +221,7 @@
       const card = industriesViewport.querySelector(".industry-card");
       if (!card) return 436;
       const gap = 16;
-      return card.getBoundingClientRect().width + gap;
+      return card.getBoundingClientRect().width + gap; // one card + gutter
     }
     industriesPrev.addEventListener("click", () => {
       industriesViewport.scrollBy({ left: -industriesStep(), behavior: "smooth" });
@@ -238,7 +231,6 @@
     });
   }
 
-  /* --------------------------- Process tabs ----------------------------- */
   const processRoot = document.querySelector("[data-process-tabs]");
   if (processRoot) {
     const tabButtons = Array.from(processRoot.querySelectorAll("[data-process-tab]"));
@@ -271,6 +263,7 @@
         if (!Number.isNaN(idx)) setProcessTab(idx);
         return;
       }
+      // image arrows cycle same index set as the pills
       if (e.target.closest("[data-process-img-prev]")) {
         e.preventDefault();
         setProcessTab(active - 1);
